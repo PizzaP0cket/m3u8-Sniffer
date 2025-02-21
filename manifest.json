@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "DC Sniffer",
+    "name": "m3u8-Sniffer",
     "description": "Sniff out the m3u8 files being streamed",
     "version": "1.0.0",
     "permissions": [
