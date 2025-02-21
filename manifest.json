@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "DC Sniffer",
+    "description": "Sniff out the m3u8 files being streamed",
+    "version": "1.0.0",
+    "permissions": [
+        "webRequest",
+        "activeTab",
+        "storage"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "./scripts/background.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
