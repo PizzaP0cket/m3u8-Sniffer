@@ -9,37 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
             // Loop through logs and display each one
             (data.logs || []).forEach((url) => {
 
-                // Create the container for each item
-                const itemContainer = document.createElement('div');
-                itemContainer.className = 'items';
+                items.innerHTML += `
+                    <div class="items">
+                        <span><b>Name:</b> Test for now</span>
+                        <span>${url.length > 30 ? url.slice(0, 40) + '...' : url}</span>
+                        <button class="itemButton" 
+                        onclick="navigator.clipboard.writeText('${url}')">Copy URL</button>
+                    </div>
+                `;
 
-                // Create and configure the name element
-                const itemName = document.createElement('span');
-                itemName.textContent = 'Name: Test for now'; // Default label (can be replaced with a more dynamic name)
-                itemName.style.display = "block";
-
-                // Create and configure the URL element
-                const itemURL = document.createElement('span');
-                itemURL.textContent = url.length > 30 ? url.slice(0, 40) + '...' : url;
-
-                // Create and configure the Button element
-                const itemButton = document.createElement('button');
-                itemButton.className = "itemButton";
-                itemButton.textContent = 'Copy URL';
-
-                // When clicked - copy to clipboard
-                itemButton.addEventListener("click", () => {
-                    navigator.clipboard.writeText(url);
-                })
-
-                // Append both name and URL to the container
-                itemContainer.appendChild(itemName);
-                itemContainer.appendChild(itemURL);
-                itemContainer.appendChild(itemButton);
-
-
-                // Append the item container to the list
-                items.appendChild(itemContainer);
             });
         });
     }
