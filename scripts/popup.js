@@ -7,25 +7,26 @@ document.addEventListener("DOMContentLoaded", () => {
             items.innerHTML = ""; // Clear current items
 
             // Loop through logs and display each one
-            (data.logs || []).forEach((url, i) => {
+            (data.logs || []).forEach((media, i) => {
 
                 // Create the container for each item
                 const itemContainer = document.createElement('div');
                 itemContainer.className = 'items';
 
-                // Create and configure the name element
-                //const itemName = document.createElement('span');
-                //itemName.textContent = 'Name: Test for now'; // Default label (can be replaced with a more dynamic name)
-                //itemName.style.display = "block";
+
 
                 const nameDiv = document.createElement('div');
                 nameDiv.style.flex = '1';
 
                 // Create and configure the URL element
                 const itemURL = document.createElement('span');
-                itemURL.textContent = url.length > 30 ? url.slice(0, 43) + '...' : url;
-
+                itemURL.textContent = media[0].length > 30 ? media[0].slice(0, 43) + '...' : media[0];
                 const buttonDiv = document.createElement('div');
+
+                // Create and configure the formatLabel element
+                const formatLabel = document.createElement('span');
+                formatLabel.textContent = media[1] // Default label (can be replaced with a more dynamic name)
+                formatLabel.style.display = "block";
 
                 // Create and configure the Button element
                 const itemButton = document.createElement('button');
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Append both name and URL to the container
                 //itemContainer.appendChild(itemName);
                 nameDiv.appendChild(itemURL)
+                nameDiv.appendChild(formatLabel);
                 itemContainer.appendChild(nameDiv);
                 //itemContainer.appendChild(buttonDiv);
                 itemContainer.appendChild(itemButton);

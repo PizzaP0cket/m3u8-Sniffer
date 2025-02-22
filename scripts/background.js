@@ -8,10 +8,10 @@ const videoFormats = [
 chrome.webRequest.onCompleted.addListener(
     function (details) {
         if (videoFormats.some(format => details.url.includes(format))) {
+            const format = videoFormats.find(format => details.url.includes(format));
             chrome.storage.local.get({ logs: [] }, function (data) {
-                console.log(data)
                 let logs = data.logs;
-                logs.push(details.url);
+                logs.push([details.url, format]);
                 logs = [...new Set(logs)]; // Remove duplicates
                 chrome.storage.local.set({ logs });
             });
