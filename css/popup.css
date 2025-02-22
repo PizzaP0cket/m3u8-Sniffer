@@ -8,13 +8,13 @@ body {
 
 .items {
     padding: 5px 10px;
-    border-style: solid;
     border-radius: 5px;
     border: 2px;
     border-color: black;
     border-style: solid;
     background-color: #1E4C40;
     color: #FFFFFF;
+    display: flex;
 }
 
 .itemButton {

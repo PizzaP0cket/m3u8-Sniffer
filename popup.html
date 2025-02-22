@@ -11,8 +11,34 @@
 
 <body>
     <div class="container" id="plugin-container">
-        <h4 id="plugin-heading">M3U8 Streams</h4>
+        <div style="display: flex;">
+            <h4 id="plugin-heading" style="flex: 1">Media Sniffer</h4>
+            <div>
+                <!-- TO DO: Program functionality-->
+                <span>ON/OFF</span>
+                <input type="checkbox">
+            </div>
+        </div>
+
         <div id="items"></div>
+
+        <!-- DESIRED HTML LAYOUT
+        <div class="items" style="display: flex;">
+            <div style="flex: 1; padding-top: 5px;">
+                <div>
+                    <span><b>Name:</b></span>
+                    <span>Attack on Titan</span>
+                </div>
+                <span>file:///Users/pizzapocket...</span>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <button class="itemButton">c</button>
+                <button class="itemButton">x</button>
+            </div>
+        </div> 
+        -->
+
+
         <br>
         <button id="clear">Clear All</button>
     </div>
