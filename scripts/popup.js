@@ -13,8 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const itemContainer = document.createElement('div');
                 itemContainer.className = 'items';
 
-
-
                 const nameDiv = document.createElement('div');
                 nameDiv.style.flex = '1';
 
@@ -34,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 itemButton.textContent = 'C';
                 // When clicked - copy to clipboard
                 itemButton.addEventListener("click", () => {
-                    navigator.clipboard.writeText(url);
+                    navigator.clipboard.writeText(media[0]);
                 })
 
                 // Create and configure the Delete Buttom element
@@ -54,9 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 //itemContainer.appendChild(buttonDiv);
                 itemContainer.appendChild(itemButton);
                 itemContainer.appendChild(deleteButton);
-
-
-
 
                 // Append the item container to the list
                 items.appendChild(itemContainer);
