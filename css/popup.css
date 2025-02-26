@@ -3,7 +3,7 @@ body {
 }
 
 .container {
-    width: 350px;
+    width: 380px;
 }
 
 .items {
@@ -14,10 +14,36 @@ body {
     border-style: solid;
     background-color: #1E4C40;
     color: #FFFFFF;
+    display: inline-flex;
+    width: 100px;
+}
+
+/* IMAGES */
+.image-items {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    background-color: #1E4C40;
+    color: #FFFFFF;
     display: flex;
+}
+
+.media-image {
+    height: 100px;
+    width: 100px;
 }
 
 .itemButton {
     background-color: #E07A5F;
     color: #FFFFFF;
+    max-height: 25px;
+}
+
+.format-label {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 50px;
+    padding-right: 5px;
 }
