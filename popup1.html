@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U8 Logger</title>
+    <script src="./scripts/popup.js" defer></script>
+    <link rel="stylesheet" href="./css/popup.css">
+</head>
+
+<body>
+    <div class="container" id="plugin-container">
+        <div style="display: flex;">
+            <h4 id="plugin-heading" style="flex: 1">Media Sniffer</h4>
+            <div>
+                <!-- TO DO: Program functionality-->
+                <span>ON/OFF</span>
+                <input type="checkbox">
+                <button>S</button>
+            </div>
+        </div>
+        <!-- <input type="checkbox">.mp4
+        <input type="checkbox">.webm
+        <input type="checkbox">.ogv
+        <input type="checkbox">.avi
+        <input type="checkbox">.mov
+        <input type="checkbox">.flv
+        <input type="checkbox">.mkv
+        <input type="checkbox">.3gp
+        <input type="checkbox">.m3u8
+        <input type="checkbox">.mp3
+        <input type="checkbox">.wav
+        <input type="checkbox">.ogg
+        <input type="checkbox">.flac
+        <input type="checkbox">.aac
+        <input type="checkbox">.m4a
+        <input type="checkbox">.wma
+        <input type="checkbox">.jpg
+        <input type="checkbox">.jpeg
+        <input type="checkbox">.png
+        <input type="checkbox">.gif
+        <input type="checkbox">.webp
+        <input type="checkbox">.bmp
+        <input type="checkbox">.svg
+        <input type="checkbox">.tiff
+        <input type="checkbox">.pdf
+        <input type="checkbox">.doc
+        <input type="checkbox">.docx
+        <input type="checkbox">.xls
+        <input type="checkbox">.xlsx
+        <input type="checkbox">.ppt
+        <input type="checkbox">.pptx
+        <input type="checkbox">.txt
+        <input type="checkbox">.csv
+        <input type="checkbox">.json
+        <input type="checkbox">.xlm
+        <input type="checkbox">.jsonld
+        <input type="checkbox">.zip
+        <input type="checkbox">.tar
+        <input type="checkbox">.gz
+        <input type="checkbox">.rar
+        <input type="checkbox">.7z
+        <input type="checkbox">.exe
+        <input type="checkbox">.dmg -->
+
+        <div id="items" class="items">
+            <p id=".mp4-label" class="file-label">.mp4 (0)</p>
+            <div id=".mp4-container" class="image-items"></div>
+            <p id=".webm-label" class="file-label">.webm (0)</p>
+            <div id=".webm-container" class="image-items"></div>
+            <p id=".ogv-label" class="file-label">.ogv (0)</p>
+            <div id=".ogv-container" class="image-items"></div>
+            <p id=".avi-label" class="file-label">.avi (0)</p>
+            <div id=".avi-container" class="image-items"></div>
+            <p id=".mov-label" class="file-label">.mov (0)</p>
+            <div id=".mov-container" class="image-items"></div>
+            <p id=".flv-label" class="file-label">.flv (0)</p>
+            <div id=".flv-container" class="image-items"></div>
+            <p id=".mkv-label" class="file-label">.mkv (0)</p>
+            <div id=".mkv-container" class="image-items"></div>
+            <p id=".3gp-label" class="file-label">.3gp (0)</p>
+            <div id=".3gp-container" class="image-items"></div>
+            <p id=".m3u8-label" class="file-label">.m3u8 (0)</p>
+            <div id=".m3u8-container" class="image-items"></div>
+
+            <!-- Audio Files -->
+            <p id=".mp3-label" class="file-label">.mp3 (0)</p>
+            <div id=".mp3-container" class="image-items"></div>
+            <p id=".wav-label" class="file-label">.wav (0)</p>
+            <div id=".wav-container" class="image-items"></div>
+            <p id=".ogg-label" class="file-label">.ogg (0)</p>
+            <div id=".ogg-container" class="image-items"></div>
+            <p id=".flac-label" class="file-label">.flac (0)</p>
+            <div id=".flac-container" class="image-items"></div>
+            <p id=".aac-label" class="file-label">.aac (0)</p>
+            <div id=".aac-container" class="image-items"></div>
+            <p id=".m4a-label" class="file-label">.m4a (0)</p>
+            <div id=".m4a-container" class="image-items"></div>
+            <p id=".wma-label" class="file-label">.wma (0)</p>
+            <div id=".wma-container" class="image-items"></div>
+
+            <!-- Image Files -->
+            <p id=".jpg-label" class="file-label">.jpg (0)</p>
+            <div id=".jpg-container" class="image-items"></div>
+            <p id=".jpeg-label" class="file-label">.jpeg (0)</p>
+            <div id=".jpeg-container" class="image-items"></div>
+            <p id=".png-label" class="file-label">.png (0)</p>
+            <div id=".png-container" class="image-items"></div>
+            <p id=".gif-label" class="file-label">.gif (0)</p>
+            <div id=".gif-container" class="image-items"></div>
+            <p id=".webp-label" class="file-label">.webp (0)</p>
+            <div id=".webp-container" class="image-items"></div>
+            <p id=".bmp-label" class="file-label">.bmp (0)</p>
+            <div id=".bmp-container" class="image-items"></div>
+            <p id=".svg-label" class="file-label">.svg (0)</p>
+            <div id=".svg-container" class="image-items"></div>
+            <p id=".tiff-label" class="file-label">.tiff (0)</p>
+            <div id=".tiff-container" class="image-items"></div>
+
+            <!-- Document Files -->
+            <p id=".pdf-label" class="file-label">.pdf (0)</p>
+            <div id=".pdf-container" class="image-items"></div>
+            <p id=".doc-label" class="file-label">.doc (0)</p>
+            <div id=".doc-container" class="image-items"></div>
+            <p id=".docx-label" class="file-label">.docx (0)</p>
+            <div id=".docx-container" class="image-items"></div>
+            <p id=".xls-label" class="file-label">.xls (0)</p>
+            <div id=".xls-container" class="image-items"></div>
+            <p id=".xlsx-label" class="file-label">.xlsx (0)</p>
+            <div id=".xlsx-container" class="image-items"></div>
+            <p id=".ppt-label" class="file-label">.ppt (0)</p>
+            <div id=".ppt-container" class="image-items"></div>
+            <p id=".pptx-label" class="file-label">.pptx (0)</p>
+            <div id=".pptx-container" class="image-items"></div>
+            <p id=".txt-label" class="file-label">.txt (0)</p>
+            <div id=".txt-container" class="image-items"></div>
+            <p id=".csv-label" class="file-label">.csv (0)</p>
+            <div id=".csv-container" class="image-items"></div>
+
+            <!-- Web-related Files -->
+            <p id=".json-label" class="file-label">.json (0)</p>
+            <div id=".json-container" class="image-items"></div>
+            <p id=".xml-label" class="file-label">.xml (0)</p>
+            <div id=".xml-container" class="image-items"></div>
+            <p id=".jsonld-label" class="file-label">.jsonld (0)</p>
+            <div id=".jsonld-container" class="image-items"></div>
+
+            <!-- Compressed Files -->
+            <p id=".zip-label" class="file-label">.zip (0)</p>
+            <div id=".zip-container" class="image-items"></div>
+            <p id=".tar-label" class="file-label">.tar (0)</p>
+            <div id=".tar-container" class="image-items"></div>
+            <p id=".gz-label" class="file-label">.gz (0)</p>
+            <div id=".gz-container" class="image-items"></div>
+            <p id=".rar-label" class="file-label">.rar (0)</p>
+            <div id=".rar-container" class="image-items"></div>
+            <p id=".7z-label" class="file-label">.7z (0)</p>
+            <div id=".7z-container" class="image-items"></div>
+
+            <!-- Miscellaneous -->
+            <p id=".exe-label" class="file-label">.exe (0)</p>
+            <div id=".exe-container" class="image-items"></div>
+            <p id=".dmg-label" class="file-label">.dmg (0)</p>
+            <div id=".dmg-container" class="image-items"></div>
+        </div>
+    </div>
+
+    <!-- DESIRED HTML LAYOUT
+        <div class="items" style="display: flex;">
+            <div style="flex: 1; padding-top: 5px;">
+                <div>
+                    <span><b>Name:</b></span>
+                    <span>Attack on Titan</span>
+                </div>
+                <span>file:///Users/pizzapocket...</span>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <button class="itemButton">c</button>
+                <button class="itemButton">x</button>
+            </div>
+        </div> 
+        -->
+
+    <br>
+    <div style="width: 100%; height: auto; background-color: grey;">
+        <button id="clear">Clear All</button>
+    </div>
+    </div>
+
+</body>
+
+</html>

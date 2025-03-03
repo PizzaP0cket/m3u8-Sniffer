@@ -1,187 +1,126 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const itemContainer = document.getElementById("items");
     const clearBtn = document.getElementById("clear");
+    let fileTypesUsed = new Set();
 
-    const dummyData = [["https://i.pinimg.com/736x/53/76/31/53763136436d736e99c915f41f0ce25d.jpg", ".jpg"],
-    ["https://test.json", ".json"], ["https://test.json", ".json"], ["https://test.json", ".json"], ["https://test.json", ".json"], ["https://test.json", ".json"],
-    ["https://test.gif", ".gif"], ["https://test.xls", ".xls"], ["https://test.doc", ".doc"], ["https://test.ppt", ".ppt"], ["https://test.csv", ".csv"], ["https://test.csv", ".csv"]]
+    const storage = (typeof browser !== "undefined" ? browser : chrome).storage.local;
 
     function updateList() {
-        chrome.storage.local.get("logs", function (data) {
+        storage.get(["logs", "folderStates"], (data) => {
+            itemContainer.innerHTML = '';
+            //fileTypesUsed.clear();
+            let folderStates = data.folderStates || {};
             // Loop through logs and display each one
             (data.logs || []).forEach((media, i) => {
-                //(dummyData).forEach((media, i) => {
 
-                let count = data.logs.filter(test => test[1] === media[1]).length;
-                const label = document.getElementById(`${media[1]}-label`)
-                label.textContent = `${media[1]} (${count})`;
+                let [url, type] = media;
+                fileTypesUsed.add(type);
 
-                console.log(`${media[1]} + ${count}`)
-                if (media[0].includes(".jpg") || media[0].includes(".jpeg") || media[0].includes(".png") || media[0].includes(".gif") || media[0].includes(".webp") || media[0].includes(".bmp") || media[0].includes(".svg") || media[0].includes(".tiff")) {
-                    addImageMedia(media, i);
-                } else {
-                    addFileMedia(media, i);
+                let fileTypeContainer = document.getElementById(type);
+                //let fileTypeItem;
+                let isNewType = false;
+
+
+                // get the file type div
+                // if it doesn't exist -> create a new div
+                if (!fileTypeContainer) {
+                    fileTypeContainer = document.createElement('div');
+                    fileTypeContainer.id = type;
+                    let isOpen = folderStates[type] || false;
+
+                    fileTypeContainer.innerHTML = `
+                    <div class='file-type' id="file-type-${type}">
+                        <div>
+                            <span>${type}</span>
+                            <span id="${type}-count">(0)</span>
+                        </div>
+                        <div style="padding-right: 5px;">
+                            <span id="toggle-${type}">${isOpen ? '-' : '+'}</span>
+                        </div>
+                    </div>
+                    <div id="${type}-items" style="display: ${isOpen ? '' : 'none'};">
+                    </div>`;
+                    itemContainer.appendChild(fileTypeContainer)
+                    isNewType = true;
                 }
+
+                const fileTypeItem = document.getElementById(`${type}-items`);
+
+                if (isNewType) {
+                    document.getElementById(`file-type-${type}`).addEventListener("click", () => {
+                        let isOpen = fileTypeItem.style.display === "";
+                        fileTypeItem.style.display = isOpen ? "none" : "";
+                        document.getElementById(`toggle-${type}`).textContent = isOpen ? '+' : '-';
+                        folderStates[type] = !isOpen;
+                        storage.set({ folderStates });
+                    });
+                }
+
+                // Count how many files there are for each file type
+                let count = data.logs.filter(test => test[1] === type).length;
+                document.getElementById(`${type}-count`).textContent = `(${count})`;
+
+                let mediaItem = document.createElement('div');
+                mediaItem.id = `media-item-${url}`;
+
+                //if (ty.includes(".jpg") || url.includes(".jpeg") || url.includes(".png") || url.includes(".gif") || url.includes(".webp") || url.includes(".bmp") || url.includes(".svg") || url.includes(".tiff")) {
+                if (url.match(/\.(jpg|jpeg|png|gif|webp|bmp|svg|tiff)$/)) {
+                    fileTypeItem.className = 'image-Container'
+                    mediaItem.innerHTML = `
+                    <div class="item-image" style="position: relative;">
+                        <img src="${url}" class="media-image" id="media-${url}" />
+                        <div style="display: flex; margin-top: -20px; position: absolute;">
+                        <div class="format-label">
+                            <span>${type}</span>
+                        </div>
+                                <button class="copyButton">c</button>
+                                <button class="deleteButton">x</button>
+                        </div>
+                    </div>`;
+                } else {
+                    mediaItem.innerHTML = `
+                    <div class="item">
+                        <div class="url">
+                            <span>- ${url}</span>
+                        </div>
+                        <div style='display:flex;'>
+                            <button class='copyButton'>c</button>
+                            <button class='deleteButton'>x</button>
+                        </div>
+                    </div>`;
+                }
+
+                // COPY BUTTON
+                mediaItem.querySelector('.copyButton').addEventListener("click", () => {
+                    navigator.clipboard.writeText(url);
+                });
+
+                // DELETE BUTTON
+                mediaItem.querySelector('.deleteButton').addEventListener("click", () => {
+                    deleteItem(i, type);
+                });
+
+                fileTypeItem.appendChild(mediaItem);
+
+            });
+        });
+    }
+
+    // TO DO: Still having issues with this one
+    function deleteItem(index) {
+        storage.get("logs", (data) => {
+            data.logs.splice(index, 1);
+            storage.set({ logs: data.logs }, () => {
+                updateList();
             });
         });
     }
 
     // Clear button handler
     clearBtn.addEventListener("click", () => {
-        chrome.storage.local.set({ logs: [] }, updateList); // Reset logs and update list
+        storage.set({ logs: [], folderStates: {} }, updateList);
     });
 
-    // Delete item from logs
-    function deleteItem(index) {
-        chrome.storage.local.get("logs", function (data) {
-            // Remove the item from the logs array
-            data.logs.splice(index, 1);
-            chrome.storage.local.set({ logs: data.logs }, updateList); // Set logs and update list
-        });
-    }
-
-    // Add Image Media formatting
-    function addImageMedia(imageMedia, index) {
-        const items = document.getElementById(`${imageMedia[1]}-container`);
-
-        let mediaItem = document.createElement('div');
-        mediaItem.id = `media-${imageMedia[0]}`;
-
-        // Define the URL or media source
-        let itemURL = `<img src="${imageMedia[0]}" class="media-image" />`;
-
-        let formatLabel = `<span class="format-label">${imageMedia[1]}</span>`;
-
-        mediaItem.innerHTML = `
-        <div class="nameDiv" style="display:inline;">
-            ${itemURL}
-            <div style='display:flex; margin-top:-20px; position:absolute'>
-                ${formatLabel}
-                <button class='copyButton'>c</button>
-                <button class='deleteButton'>x</button>
-            </div>
-        </div>
-        </div>`;
-
-        // Add event listeners for copy and delete buttons
-        addEventListeners(mediaItem, imageMedia, index);
-
-        items.appendChild(mediaItem);
-    }
-
-    // Add File Media formatting
-    function addFileMedia(fileMedia, index) {
-        const items = document.getElementById(`${fileMedia[1]}-container`);
-
-        let mediaItem = document.createElement('div');
-        mediaItem.className = `media-item ${fileMedia[0]}`;
-
-        // Define the URL or media source
-        let itemURL = `<span>${fileMedia[0].length > 30 ? fileMedia[0].slice(0, 43) + '...' : fileMedia[0]}</span>`;
-
-        mediaItem.innerHTML = `
-        <div class="nameDiv" style="display: inline-flex; padding-left: 5px;">
-            ${itemURL}
-            <div style='display:flex;'>
-                <button class='copyButton'>c</button>
-                <button class='deleteButton'>x</button>
-            </div>
-        </div>`;
-
-        // Add event listeners for copy and delete buttons
-        addEventListeners(mediaItem, fileMedia, index);
-
-        items.appendChild(mediaItem);
-    }
-
-    // Helper function to add event listeners for copy and delete buttons
-    function addEventListeners(mediaItem, media, index) {
-        // COPY BUTTON
-        let copyButton = mediaItem.querySelector('.copyButton');
-        copyButton.addEventListener("click", () => {
-            navigator.clipboard.writeText(media[0]);
-        });
-
-        // DELETE BUTTON
-        let deleteButton = mediaItem.querySelector('.deleteButton');
-        deleteButton.addEventListener("click", () => {
-            deleteItem(index);
-            updateList();
-        });
-    }
-
-    // Initial load of the logs
     updateList();
 
-
-
-    const videoFormats = [
-        // Video Files
-        ".mp4",   // MPEG-4 Video
-        ".webm",  // WebM Video
-        ".ogv",   // Ogg Video
-        ".avi",   // Audio Video Interleave
-        ".mov",   // QuickTime Movie
-        ".flv",   // Flash Video
-        ".mkv",   // Matroska Video
-        ".3gp",   // 3GPP Video
-        ".m3u8",  // HLS Playlist
-
-        // Audio Files
-        ".mp3",   // MP3 Audio
-        ".wav",   // Waveform Audio
-        ".ogg",   // Ogg Audio
-        ".flac",  // Free Lossless Audio Codec
-        ".aac",   // Advanced Audio Codec
-        ".m4a",   // MPEG-4 Audio
-        ".wma",   // Windows Media Audio
-
-        // Image Files
-        ".jpg",   // JPEG Image
-        ".jpeg",  // JPEG Image
-        ".png",   // Portable Network Graphics
-        ".gif",   // Graphics Interchange Format
-        ".webp",  // WebP Image
-        ".bmp",   // Bitmap Image
-        ".svg",   // Scalable Vector Graphics
-        ".tiff",  // Tagged Image File Format
-
-        // Document Files
-        ".pdf",   // Portable Document Format
-        ".doc",   // Microsoft Word Document
-        ".docx",  // Microsoft Word Document
-        ".xls",   // Microsoft Excel Spreadsheet
-        ".xlsx",  // Microsoft Excel Spreadsheet
-        ".ppt",   // Microsoft PowerPoint Presentation
-        ".pptx",  // Microsoft PowerPoint Presentation
-        ".txt",   // Plain Text File
-        ".csv",   // Comma-Separated Values
-
-        // Web-related Files
-        ".json",  // JSON Data
-        ".xml",   // XML File
-        ".jsonld",// JSON Linked Data
-
-        // Compressed Files
-        ".zip",   // ZIP Archive
-        ".tar",   // Tape Archive
-        ".gz",    // Gzip Compressed Archive
-        ".rar",   // RAR Archive
-        ".7z",    // 7-Zip Archive
-
-        // Miscellaneous
-        ".exe",   // Executable File
-        ".dmg",   // Apple Disk Image
-    ];
-
-    // Loop through the array
-    videoFormats.forEach(function (mediaID) {
-        // Add event listener to each p element
-        document.getElementById(`${mediaID}-label`).addEventListener('click', function () {
-            let element = document.getElementById(`${mediaID}-container`)
-            element.style.display == 'none' ? element.style.display = 'flex' : element.style.display = 'none';
-        });
-    });
-
-
 });
-

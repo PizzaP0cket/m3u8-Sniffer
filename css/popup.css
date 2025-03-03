@@ -1,65 +1,132 @@
 body {
-    background-color: #FFFF;
-}
-
-.container {
-    width: 400px;
-}
-
-.items {
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 2px;
-    border-color: black;
-    border-style: solid;
-    background-color: #1E4C40;
-    color: #FFFFFF;
-    display: inline-flex;
-    width: 100px;
-}
-
-/* IMAGES */
-.image-items {
-    display: flex;
-    flex-wrap: wrap;
     margin: 0px;
+    background-color: #3D3D3D;
+    width: 415px;
+    user-select: none;
+}
+
+/* .container {
+    padding: 2px 2px 2px 2px;
+} */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #578E7E;
+    padding: 3px;
+    /* border: 1px solid black;
+    border-radius: 5px; */
+    color: #F5ECD5;
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 2px 2px 2px 2px; */
+}
+
+.item-container {
+    max-height: 500px;
+    overflow: auto;
+    background-color: #d6ceba;
+}
+
+.file-type {
+    background-color: #F5ECD5;
+    padding: 3px 5px 3px 5px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid grey;
+    position: sticky;
+    cursor: pointer;
+    /* Makes the element sticky */
+    top: 0;
+    /* Sticks it to the top of the parent container */
+    z-index: 1;
+    /* Ensures it stays above other content when scrolling */
+}
+
+.file-type:hover {
+    background-color: #f3dea9;
+}
+
+.file-type:active {
+    background-color: #d6ceba;
+}
+
+.item {
+    display: flex;
+    padding-left: 5px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d6ceba;
+    border: 1px solid grey;
+    width: 392px;
+}
+
+.item:hover {
+    background-color: #b8a87f;
+}
+
+.url {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-image {
+    /* display: flex;
+    padding-left: 5px;
+    border: 1px solid grey; */
+    display: inline;
 }
 
 .media-image {
-    height: 100px;
+    /* scale: 0.5; */
     width: 100px;
+    height: 100px;
 }
 
-.copyButton {
-    background-color: grey;
-    color: #FFFFFF;
-    max-height: 20px;
-
+.media-image:hover {
+    opacity: 0.7;
 }
 
 .deleteButton {
-    background-color: #E07A5F;
-    color: #FFFFFF;
-    max-height: 20px;
+    border: 1px solid #3D3D3D;
+    background: #578E7E;
+    color: #F5ECD5;
+}
+
+.copyButton {
+    border: 1px solid #3D3D3D;
+    background: #578E7E;
+    color: #F5ECD5;
+}
+
+.clearButton {
+    border: 2px solid #3D3D3D;
+    background: #F5ECD5;
+    color: #3D3D3D;
+}
+
+/* Padding: T R B L */
+
+.image-Container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px;
+    background-color: #d6ceba;
 }
 
 .format-label {
     display: block;
     background-color: rgba(0, 0, 0, 0.8);
-    width: 50px;
+    width: 54px;
     padding-right: 3px;
     padding-left: 2px;
-    max-height: 20px;
+    height: 20px;
     color: #FFFFFF;
-}
-
-.file-label {
-    cursor: pointer;
-    background-color: greenyellow;
-    margin: 0px;
-    padding: 3px;
-    font-weight: bold;
-    border: 1px;
-    border-color: black;
-    border-style: solid;
 }

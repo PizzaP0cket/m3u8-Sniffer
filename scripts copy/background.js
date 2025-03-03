@@ -1,5 +1,6 @@
 // All streamed video file extensions
-const videoFormats = new Set([    // Video Files
+const videoFormats = [
+    // Video Files
     ".mp4",   // MPEG-4 Video
     ".webm",  // WebM Video
     ".ogv",   // Ogg Video
@@ -55,27 +56,24 @@ const videoFormats = new Set([    // Video Files
     // Miscellaneous
     ".exe",   // Executable File
     ".dmg",   // Apple Disk Image
-]);
+];
 
-const storage = typeof browser !== "undefined" ? browser.storage.local : chrome.storage.local;
 
+// Listen for mention of file extension
 chrome.webRequest.onCompleted.addListener(
-    async (details) => {
-        try {
-            const url = new URL(details.url);
-            const format = [...videoFormats].find(ext => url.pathname.endsWith(ext));
-
-            if (!format) return; // Skip if not a video file
-
-            const data = await storage.get({ logs: [] });
-            const logs = new Set(data.logs.map(log => log[0]));
-
-            if (!logs.has(details.url)) {
-                data.logs.push([details.url, format]);
-                await storage.set({ logs: data.logs });
-            }
-        } catch (err) {
-            console.error("Error processing video URL:", err);
+    function (details) {
+        if (videoFormats.some(format => details.url.includes(format))) {
+            const format = videoFormats.find(format => details.url.includes(format));
+            chrome.storage.local.get({ logs: [] }, function (data) {
+                let logs = data.logs;
+                logs.push([details.url, format]);
+                // Remove duplicates
+                logs = [...new Set(logs.map(log => log[0]))].map(url => {
+                    return logs.find(log => log[0] === url);
+                });
+                //logs = [...new Set(logs)]; // Remove duplicates
+                chrome.storage.local.set({ logs });
+            });
         }
     },
     { urls: ["<all_urls>"] }

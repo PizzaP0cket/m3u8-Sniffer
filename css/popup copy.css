@@ -1,0 +1,80 @@
+body {
+    background-color: #FFFF;
+}
+
+.container {
+    width: 400px;
+}
+
+/*
+.items {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    background-color: #1E4C40;
+    color: #FFFFFF;
+    display: inline-flex;
+    width: 100px;
+}
+*/
+
+.items {
+
+    max-height: 500px;
+    max-width: 400px;
+    overflow: auto;
+}
+
+/* IMAGES */
+.image-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px;
+}
+
+.media-image {
+    height: 100px;
+    width: 100px;
+}
+
+.copyButton {
+    background-color: grey;
+    color: #FFFFFF;
+    max-height: 20px;
+
+}
+
+.deleteButton {
+    background-color: #E07A5F;
+    color: #FFFFFF;
+    max-height: 20px;
+}
+
+.format-label {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 50px;
+    padding-right: 3px;
+    padding-left: 2px;
+    max-height: 20px;
+    color: #FFFFFF;
+}
+
+.file-label {
+    cursor: pointer;
+    background-color: greenyellow;
+    margin: 0px;
+    padding: 3px;
+    font-weight: bold;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    position: sticky;
+    /* Makes the element sticky */
+    top: 0;
+    /* Sticks it to the top of the parent container */
+    z-index: 1;
+    /* Ensures it stays above other content when scrolling */
+}
