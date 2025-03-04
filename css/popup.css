@@ -34,6 +34,12 @@ body {
     background-color: #d6ceba;
 }
 
+.settings-container {
+    display: none;
+    background-color: #F5ECD5;
+
+}
+
 .file-type {
     background-color: #F5ECD5;
     padding: 3px 5px 3px 5px;
@@ -99,6 +105,7 @@ body {
     border: 1px solid #3D3D3D;
     background: #8e5757;
     color: #F5ECD5;
+    cursor: pointer;
 }
 
 .deleteButton:hover {
@@ -109,6 +116,7 @@ body {
     border: 1px solid #3D3D3D;
     background: #575f8e;
     color: #F5ECD5;
+    cursor: pointer;
 }
 
 .copyButton:hover {
@@ -119,6 +127,7 @@ body {
     border: 2px solid #3D3D3D;
     background: #F5ECD5;
     color: #3D3D3D;
+    cursor: pointer;
 }
 
 .clearButton:hover {
@@ -127,6 +136,15 @@ body {
 
 .clearButton:active {
     background: #F5ECD5;
+}
+
+.format-label {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 54px;
+    padding: 2px 3px 0px 2px;
+    height: 20px;
+    color: #FFFFFF;
 }
 
 /* Padding: T R B L */
@@ -138,11 +156,21 @@ body {
     background-color: #d6ceba;
 }
 
-.format-label {
-    display: block;
-    background-color: rgba(0, 0, 0, 0.8);
-    width: 54px;
-    padding: 2px 3px 0px 2px;
-    height: 20px;
-    color: #FFFFFF;
+.file-format-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    list-style: none;
+    padding: 5px 2px 5px 2px;
+    margin: 0px;
+}
+
+.file-format-list li {
+    display: flex;
+    align-items: center;
+}
+
+.file-format-list label {
+    font-size: 14px;
+    margin-left: 8px;
 }
