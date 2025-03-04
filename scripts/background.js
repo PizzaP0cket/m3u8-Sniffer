@@ -60,7 +60,7 @@ const fileFormat = new Set([    // Video Files
 
 const storage = typeof browser !== "undefined" ? browser.storage.local : chrome.storage.local;
 
-chrome.webRequest.onCompleted.addListener(
+storage.webRequest.onCompleted.addListener(
     async (details) => {
         try {
             const url = new URL(details.url.toLowerCase());
