@@ -1,5 +1,5 @@
 // All streamed video file extensions
-const videoFormats = new Set([    // Video Files
+const fileFormat = new Set([    // Video Files
     ".mp4",   // MPEG-4 Video
     ".webm",  // WebM Video
     ".ogv",   // Ogg Video
@@ -9,6 +9,7 @@ const videoFormats = new Set([    // Video Files
     ".mkv",   // Matroska Video
     ".3gp",   // 3GPP Video
     ".m3u8",  // HLS Playlist
+    ".hls",   // HLS Stream
 
     // Audio Files
     ".mp3",   // MP3 Audio
@@ -62,8 +63,8 @@ const storage = typeof browser !== "undefined" ? browser.storage.local : chrome.
 chrome.webRequest.onCompleted.addListener(
     async (details) => {
         try {
-            const url = new URL(details.url);
-            const format = [...videoFormats].find(ext => url.pathname.endsWith(ext));
+            const url = new URL(details.url.toLowerCase());
+            const format = [...fileFormat].find(ext => url.pathname.includes(ext));
 
             if (!format) return; // Skip if not a video file
 
@@ -80,4 +81,3 @@ chrome.webRequest.onCompleted.addListener(
     },
     { urls: ["<all_urls>"] }
 );
-

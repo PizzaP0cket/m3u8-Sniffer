@@ -3,6 +3,7 @@ body {
     background-color: #3D3D3D;
     width: 415px;
     user-select: none;
+    /* border: 1px solid black; */
 }
 
 /* .container {
@@ -96,20 +97,36 @@ body {
 
 .deleteButton {
     border: 1px solid #3D3D3D;
-    background: #578E7E;
+    background: #8e5757;
     color: #F5ECD5;
+}
+
+.deleteButton:hover {
+    background: #764848;
 }
 
 .copyButton {
     border: 1px solid #3D3D3D;
-    background: #578E7E;
+    background: #575f8e;
     color: #F5ECD5;
+}
+
+.copyButton:hover {
+    background: #454b71;
 }
 
 .clearButton {
     border: 2px solid #3D3D3D;
     background: #F5ECD5;
     color: #3D3D3D;
+}
+
+.clearButton:hover {
+    background: #cac2af;
+}
+
+.clearButton:active {
+    background: #F5ECD5;
 }
 
 /* Padding: T R B L */
@@ -125,8 +142,7 @@ body {
     display: block;
     background-color: rgba(0, 0, 0, 0.8);
     width: 54px;
-    padding-right: 3px;
-    padding-left: 2px;
+    padding: 2px 3px 0px 2px;
     height: 20px;
     color: #FFFFFF;
 }

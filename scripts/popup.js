@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateList() {
         storage.get(["logs", "folderStates"], (data) => {
             itemContainer.innerHTML = '';
-            //fileTypesUsed.clear();
+            fileTypesUsed.clear();
             let folderStates = data.folderStates || {};
             // Loop through logs and display each one
             (data.logs || []).forEach((media, i) => {
@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 let fileTypeContainer = document.getElementById(type);
                 //let fileTypeItem;
                 let isNewType = false;
-
 
                 // get the file type div
                 // if it doesn't exist -> create a new div
@@ -63,8 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 let mediaItem = document.createElement('div');
                 mediaItem.id = `media-item-${url}`;
 
-                //if (ty.includes(".jpg") || url.includes(".jpeg") || url.includes(".png") || url.includes(".gif") || url.includes(".webp") || url.includes(".bmp") || url.includes(".svg") || url.includes(".tiff")) {
-                if (url.match(/\.(jpg|jpeg|png|gif|webp|bmp|svg|tiff)$/)) {
+                if (url.match(/\.(jpg|jpeg|png|gif|webp|bmp|svg|tiff)/)) {
                     fileTypeItem.className = 'image-Container'
                     mediaItem.innerHTML = `
                     <div class="item-image" style="position: relative;">
@@ -97,8 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // DELETE BUTTON
                 mediaItem.querySelector('.deleteButton').addEventListener("click", () => {
-                    deleteItem(i, type);
+                    deleteItem(url, type);
                 });
+
 
                 fileTypeItem.appendChild(mediaItem);
 
@@ -106,12 +105,35 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // TO DO: Still having issues with this one
-    function deleteItem(index) {
+    // Delete item from list
+    function deleteItem(url, type) {
         storage.get("logs", (data) => {
-            data.logs.splice(index, 1);
-            storage.set({ logs: data.logs }, () => {
-                updateList();
+            let logs = data.logs || [];
+
+            // Find the index of the item by matching the URL
+            let index = logs.findIndex(item => item[0] === url);
+            if (index === -1) return; // If not found, exit
+
+            logs.splice(index, 1); // Remove item from logs
+
+            storage.set({ logs }, () => {
+                // Remove the specific media item from the DOM
+                const mediaItem = document.getElementById(`media-item-${url}`);
+                if (mediaItem) {
+                    mediaItem.remove();
+                }
+
+                // Update count
+                let count = logs.filter(item => item[1] === type).length;
+                const countElement = document.getElementById(`${type}-count`);
+                if (countElement) {
+                    countElement.textContent = `(${count})`;
+                }
+
+                // If no more items of this type exist, remove the whole file type container
+                if (count === 0) {
+                    document.getElementById(type)?.remove();
+                }
             });
         });
     }
