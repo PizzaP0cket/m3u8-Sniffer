@@ -42,40 +42,39 @@ body {
 
 .file-type {
     background-color: #F5ECD5;
-    padding: 3px 5px 3px 5px;
+    /* padding: 3px 5px 3px 5px; */
+    padding: 5px 5px;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
     border: 1px solid grey;
     position: sticky;
     cursor: pointer;
-    /* Makes the element sticky */
+    transition: background 0.3s;
     top: 0;
-    /* Sticks it to the top of the parent container */
     z-index: 1;
-    /* Ensures it stays above other content when scrolling */
 }
 
 .file-type:hover {
-    background-color: #f3dea9;
+    background-color: #E3C78A;
 }
 
 .file-type:active {
-    background-color: #d6ceba;
+    background-color: #C4B89A;
 }
 
 .item {
     display: flex;
-    padding-left: 5px;
+    padding: 0px 10px 0px 5px;
+    transition: background 0.3s;
     justify-content: space-between;
     align-items: center;
     background-color: #d6ceba;
     border: 1px solid grey;
-    width: 392px;
 }
 
 .item:hover {
-    background-color: #b8a87f;
+    background-color: #B8A87F;
 }
 
 .url {
@@ -173,4 +172,79 @@ body {
 .file-format-list label {
     font-size: 14px;
     margin-left: 8px;
+}
+
+/* Buttons */
+button {
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Delete Button */
+.deleteButton {
+    background: #8E5757;
+    color: #F5ECD5;
+}
+
+.deleteButton:hover {
+    background: #764848;
+}
+
+/* Copy Button */
+.copyButton {
+    background: #575F8E;
+    color: #F5ECD5;
+}
+
+.copyButton:hover {
+    background: #454B71;
+}
+
+/* Clear Button */
+.clearButton {
+    background: #F5ECD5;
+    color: #3D3D3D;
+}
+
+.clearButton:hover {
+    background: #CAC2AF;
+    transform: scale(1.00);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    appearance: none;
+    width: 40px;
+    height: 20px;
+    background: #ddd;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.toggle-switch:checked {
+    background: #454B71;
+}
+
+.toggle-switch::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    top: 50%;
+    left: 3px;
+    transform: translateY(-50%);
+    transition: left 0.3s;
+}
+
+.toggle-switch:checked::before {
+    left: 20px;
 }
