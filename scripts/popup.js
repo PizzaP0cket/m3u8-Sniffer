@@ -1,63 +1,3 @@
-// All streamed video file extensions
-const fileFormat = new Set([    // Video Files
-    ".mp4",   // MPEG-4 Video
-    ".webm",  // WebM Video
-    ".ogv",   // Ogg Video
-    ".avi",   // Audio Video Interleave
-    ".mov",   // QuickTime Movie
-    ".flv",   // Flash Video
-    ".mkv",   // Matroska Video
-    ".3gp",   // 3GPP Video
-    ".m3u8",  // HLS Playlist
-    ".hls",   // HLS Stream
-
-    // Audio Files
-    ".mp3",   // MP3 Audio
-    ".wav",   // Waveform Audio
-    ".ogg",   // Ogg Audio
-    ".flac",  // Free Lossless Audio Codec
-    ".aac",   // Advanced Audio Codec
-    ".m4a",   // MPEG-4 Audio
-    ".wma",   // Windows Media Audio
-
-    // Image Files
-    ".jpg",   // JPEG Image
-    ".jpeg",  // JPEG Image
-    ".png",   // Portable Network Graphics
-    ".gif",   // Graphics Interchange Format
-    ".webp",  // WebP Image
-    ".bmp",   // Bitmap Image
-    ".svg",   // Scalable Vector Graphics
-    ".tiff",  // Tagged Image File Format
-
-    // Document Files
-    ".pdf",   // Portable Document Format
-    ".doc",   // Microsoft Word Document
-    ".docx",  // Microsoft Word Document
-    ".xls",   // Microsoft Excel Spreadsheet
-    ".xlsx",  // Microsoft Excel Spreadsheet
-    ".ppt",   // Microsoft PowerPoint Presentation
-    ".pptx",  // Microsoft PowerPoint Presentation
-    ".txt",   // Plain Text File
-    ".csv",   // Comma-Separated Values
-
-    // Web-related Files
-    ".json",  // JSON Data
-    ".xml",   // XML File
-    ".jsonld",// JSON Linked Data
-
-    // Compressed Files
-    ".zip",   // ZIP Archive
-    ".tar",   // Tape Archive
-    ".gz",    // Gzip Compressed Archive
-    ".rar",   // RAR Archive
-    ".7z",    // 7-Zip Archive
-
-    // Miscellaneous
-    ".exe",   // Executable File
-    ".dmg",   // Apple Disk Image
-]);
-
 document.addEventListener("DOMContentLoaded", () => {
     const itemContainer = document.getElementById("items");
     const clearBtn = document.getElementById("clear");
@@ -207,6 +147,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// All streamed video file extensions
+const fileFormat = new Set([    // Video Files
+    ".mp4",   // MPEG-4 Video
+    ".webm",  // WebM Video
+    ".ogv",   // Ogg Video
+    ".avi",   // Audio Video Interleave
+    ".mov",   // QuickTime Movie
+    ".flv",   // Flash Video
+    ".mkv",   // Matroska Video
+    ".3gp",   // 3GPP Video
+    ".m3u8",  // HLS Playlist
+    ".hls",   // HLS Stream
+
+    // Audio Files
+    ".mp3",   // MP3 Audio
+    ".wav",   // Waveform Audio
+    ".ogg",   // Ogg Audio
+    ".flac",  // Free Lossless Audio Codec
+    ".aac",   // Advanced Audio Codec
+    ".m4a",   // MPEG-4 Audio
+    ".wma",   // Windows Media Audio
+
+    // Image Files
+    ".jpg",   // JPEG Image
+    ".jpeg",  // JPEG Image
+    ".png",   // Portable Network Graphics
+    ".gif",   // Graphics Interchange Format
+    ".webp",  // WebP Image
+    ".bmp",   // Bitmap Image
+    ".svg",   // Scalable Vector Graphics
+    ".tiff",  // Tagged Image File Format
+
+    // Document Files
+    ".pdf",   // Portable Document Format
+    ".doc",   // Microsoft Word Document
+    ".docx",  // Microsoft Word Document
+    ".xls",   // Microsoft Excel Spreadsheet
+    ".xlsx",  // Microsoft Excel Spreadsheet
+    ".ppt",   // Microsoft PowerPoint Presentation
+    ".pptx",  // Microsoft PowerPoint Presentation
+    ".txt",   // Plain Text File
+    ".csv",   // Comma-Separated Values
+
+    // Web-related Files
+    ".json",  // JSON Data
+    ".xml",   // XML File
+    ".jsonld",// JSON Linked Data
+
+    // Compressed Files
+    ".zip",   // ZIP Archive
+    ".tar",   // Tape Archive
+    ".gz",    // Gzip Compressed Archive
+    ".rar",   // RAR Archive
+    ".7z",    // 7-Zip Archive
+
+    // Miscellaneous
+    ".exe",   // Executable File
+    ".dmg",   // Apple Disk Image
+]);
+
 document.getElementById("settings").addEventListener("click", () => {
     const settingsContainer = document.getElementById("checkboxes");
     const list = document.getElementById("list");
@@ -218,10 +218,46 @@ document.getElementById("settings").addEventListener("click", () => {
 
     // Only append checkboxes if they haven't been added yet
     if (list.children.length === 0) {
-        fileFormat.forEach(format => {
-            const fileCheckBox = document.createElement('div');
-            fileCheckBox.innerHTML = `<li><input type="checkbox" id="checkbox-${format}"><label for="${format}"><b>${format}</b></li>`;
-            list.appendChild(fileCheckBox);
+        // Fetch the checked files from storage
+        const storage = (typeof browser !== "undefined" ? browser : chrome).storage.local;
+        storage.get('checkedFiles', (data) => {
+            const checkedFiles = data.checkedFiles || [];
+            fileFormat.forEach(format => {
+                const fileCheckBox = document.createElement('div');
+                fileCheckBox.innerHTML = `<li><input type="checkbox" id="checkbox-${format}" data-format="${format}"><label for="${format}"><b>${format}</b></label></li>`;
+                list.appendChild(fileCheckBox);
+
+                // Find if this format is in the checkedFiles array and set the checkbox state
+                const storedState = checkedFiles.find(item => item[0] === format);
+                const isChecked = storedState ? storedState[1] === 'checked' : false;
+                document.getElementById(`checkbox-${format}`).checked = isChecked;
+            });
+        });
+    }
+});
+
+// Event listener to save checkbox state in localStorage
+document.getElementById("list").addEventListener("change", (event) => {
+    const storage = (typeof browser !== "undefined" ? browser : chrome).storage.local;
+
+    if (event.target.type === 'checkbox') {
+        const format = event.target.getAttribute('data-format');
+        const isChecked = event.target.checked ? 'checked' : 'unchecked'; // 'checked' or 'unchecked'
+
+        // Retrieve the existing checkedFiles array from storage
+        storage.get('checkedFiles', (data) => {
+            let checkedFiles = data.checkedFiles || [];  // If no data exists, initialize as empty array
+            // Check if the format already exists
+            const existingIndex = checkedFiles.findIndex(item => item[0] === format);
+            if (existingIndex !== -1) {
+                // Update the state of the existing format
+                checkedFiles[existingIndex] = [format, isChecked];
+            } else {
+                // Add the new format and its checked state to the array
+                checkedFiles.push([format, isChecked]);
+            }
+            // Save the updated checkedFiles array back to storage
+            storage.set({ checkedFiles: checkedFiles });
         });
     }
 });

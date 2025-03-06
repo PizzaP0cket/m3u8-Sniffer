@@ -28,10 +28,16 @@ body {
     /* padding: 2px 2px 2px 2px; */
 }
 
-.item-container {
+/* .item-container {
     max-height: 500px;
     overflow: auto;
     background-color: #d6ceba;
+} */
+/* Scrollable Container */
+.item-container {
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: #D6CEBA;
 }
 
 .settings-container {
@@ -65,7 +71,7 @@ body {
 
 .item {
     display: flex;
-    padding: 0px 10px 0px 5px;
+    padding: 0px 0px 0px 5px;
     transition: background 0.3s;
     justify-content: space-between;
     align-items: center;
@@ -141,7 +147,7 @@ body {
     display: block;
     background-color: rgba(0, 0, 0, 0.8);
     width: 54px;
-    padding: 2px 3px 0px 2px;
+    padding: 2px 1px 0px 2px;
     height: 20px;
     color: #FFFFFF;
 }
@@ -193,6 +199,7 @@ button:hover {
 
 .deleteButton:hover {
     background: #764848;
+    transform: scale(1.00);
 }
 
 /* Copy Button */
@@ -203,6 +210,7 @@ button:hover {
 
 .copyButton:hover {
     background: #454B71;
+    transform: scale(1.00);
 }
 
 /* Clear Button */
