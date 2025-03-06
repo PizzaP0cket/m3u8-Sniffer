@@ -1,2 +1,4 @@
-# m3u8-Sniffer
-A plugin that will detect and store the m3u8 file from the current tab
+# Plugin Description
+Asset Finder is a powerful browser extension designed to streamline the process of discovering and managing media files that load onto webpages. Whether you're looking for images, videos, audio streams, or other media assets, Asset Finder scans any active tab for file links like PNGs, MP4s, M3U8 streams, and more. With customizable settings, users can choose exactly which file types they want the plugin to search for, ensuring they only see the media that matters to them.
+
+Once the scan is complete, all found links are stored in a tidy list. Users can easily browse, delete unwanted results, or clear the entire collection in one click. This tool is perfect for web developers, digital media professionals, or anyone needing quick access to resources embedded in a webpage. Whether you're saving videos, extracting images, or reviewing media assets, Asset Finder makes it fast and easy.

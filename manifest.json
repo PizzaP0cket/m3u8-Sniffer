@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "m3u8-Sniffer",
-    "description": "Sniff out the m3u8 files being streamed",
-    "version": "1.0.3",
+    "name": "AssetFinder",
+    "description": "Powerful browser extension to streamline the process of discovering and managing media files that load onto webpages.",
+    "version": "1.0.4",
     "permissions": [
         "webRequest",
         "activeTab",
